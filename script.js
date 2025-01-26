@@ -1,10 +1,12 @@
 let input = document.querySelector("input[type='text']");
 let myform = document.querySelector("form");
-let tasks = document.querySelector(".tasks-container");
+
+let dueTasks = document.querySelector(".due-tasks");
+let doneTasks = document.querySelector(".done-tasks");
 
 
 function listTask(){
-    let taskArray = window.localStorage.getItem("tasks").split(":-:")
+    let taskArray = window.localStorage.getItem("due-tasks").split(":-:")
     taskArray.forEach(function(task){
         if (task !== ""){
             addTask(task);
@@ -15,17 +17,17 @@ function listTask(){
 listTask();
 
 function addTaskLocal(text){
-    let taskArray = window.localStorage.getItem("tasks").split(":-:");
+    let taskArray = window.localStorage.getItem("due-tasks").split(":-:");
     taskArray.push(text);
-    window.localStorage.setItem("tasks", taskArray.join(":-:"));
+    window.localStorage.setItem("due-tasks", taskArray.join(":-:"));
 };
 function removeTaskLocal(text){
-    let taskArray = window.localStorage.getItem("tasks").split(":-:")
+    let taskArray = window.localStorage.getItem("due-tasks").split(":-:")
     let index = taskArray.indexOf(text);
     if (index !== -1) { 
     taskArray.splice(index, 1);
     }
-    window.localStorage.setItem("tasks", taskArray.join(":-:"));
+    window.localStorage.setItem("due-tasks", taskArray.join(":-:"));
 };
 
 
@@ -56,7 +58,7 @@ function addTask(text){
     newTask.appendChild(taskText);
     newTask.appendChild(rmvBtn);
     
-    tasks.appendChild(newTask);
+    dueTasks.appendChild(newTask);
 
 };
 
