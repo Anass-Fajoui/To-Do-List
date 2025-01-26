@@ -31,11 +31,13 @@ form input:focus{
     outline: 2px solid rgb(255, 166, 0);
 }
 form input[type="text"]{
-    width: 500px;
+    width: 490px;
 }
 form input[type="submit"]{
     background-color: rgb(255, 166, 0);
     cursor: pointer;
+    font-weight: bold;
+    padding: 15px 18px;
     color: white;
 }
 
@@ -97,8 +99,8 @@ input[type="checkbox"]{
 }
 .clear{
     background-color:#464545;
-    color: rgb(223, 220, 220);
-    font-weight: bold;
+    color: white;
+    /* font-weight: bold; */
     border-radius: 5px;
     padding: 7px 10px;
     border: none;

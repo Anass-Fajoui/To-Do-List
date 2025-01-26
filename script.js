@@ -1,10 +1,11 @@
 let input = document.querySelector("input[type='text']");
 let myform = document.querySelector("form");
-
 let dueTasks = document.querySelector(".due-tasks");
 let doneTasks = document.querySelector(".done-tasks");
 let empty = document.querySelector(".empty");
 let clearBtn = document.querySelector(".clear");
+
+input.focus();
 
 setInterval(function(){
     if (window.localStorage.getItem("due-tasks") === ""){
