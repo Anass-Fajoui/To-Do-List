@@ -75,3 +75,16 @@ input[type="checkbox"]{
     height: 20px;
     width: 20px;
 }
+.doneTask{
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    opacity: 0.5;
+    
+    text-decoration: line-through;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
