@@ -3,7 +3,34 @@ let myform = document.querySelector("form");
 
 let dueTasks = document.querySelector(".due-tasks");
 let doneTasks = document.querySelector(".done-tasks");
+let empty = document.querySelector(".empty");
+let clearBtn = document.querySelector(".clear");
 
+setInterval(function(){
+    if (window.localStorage.getItem("due-tasks") === ""){
+        empty.style.display = "block";
+    }else{
+        empty.style.display = "none";
+    }
+    if (window.localStorage.getItem("done-tasks") === ""){
+        clearBtn.style.display = "none";
+    }else{
+        clearBtn.style.display = "block";
+
+    }
+}, 1)
+// if (window.localStorage.getItem("due-tasks") !== ""){
+//     empty.style.display = "none";
+// }
+// if (window.localStorage.getItem("done-tasks") === ""){
+//     clearBtn.style.display = "none";
+// }
+
+clearBtn.onclick = function(){
+    window.localStorage.setItem("done-tasks", "");
+    doneTasks.innerHTML = "";
+    // clearBtn.style.display = "none";
+}
 
 function listDueTask(){
     let taskArray = window.localStorage.getItem("due-tasks").split(":-:")
@@ -82,11 +109,14 @@ function addDueTask(text){
         removeDueTaskLocal(text);
     }
     myCheckbox.onchange = function(){
-        let parent = rmvBtn.parentNode;
+        setTimeout(function(){
+            let parent = rmvBtn.parentNode;
         parent.remove();
         removeDueTaskLocal(text);
         addDoneTask(text);
         addDoneTaskLocal(text);
+        }, 200 )
+        
     }
 
     rmvBtn.className = "removeTask";

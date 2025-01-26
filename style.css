@@ -87,4 +87,23 @@ input[type="checkbox"]{
     border-radius: 10px;
     margin-bottom: 15px;
 }
-
+.empty{
+    text-align: center;
+    color: #717070;
+    font-family: sans-serif;
+    font-size: 19px;
+    display: none;
+    margin-bottom: 10px;
+}
+.clear{
+    background-color:#464545;
+    color: rgb(223, 220, 220);
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 7px 10px;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    cursor: pointer;
+    display: none;
+}
