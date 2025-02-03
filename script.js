@@ -8,24 +8,18 @@ let clearBtn = document.querySelector(".clear");
 input.focus();
 
 setInterval(function(){
-    if (window.localStorage.getItem("due-tasks") === ""){
+    if (window.localStorage.getItem("due-tasks") === "" || window.localStorage.getItem("due-tasks") === null){
         empty.style.display = "block";
     }else{
         empty.style.display = "none";
     }
-    if (window.localStorage.getItem("done-tasks") === ""){
+    if (window.localStorage.getItem("done-tasks") === "" || window.localStorage.getItem("done-tasks") === null){
         clearBtn.style.display = "none";
     }else{
         clearBtn.style.display = "block";
 
     }
 }, 1)
-// if (window.localStorage.getItem("due-tasks") !== ""){
-//     empty.style.display = "none";
-// }
-// if (window.localStorage.getItem("done-tasks") === ""){
-//     clearBtn.style.display = "none";
-// }
 
 clearBtn.onclick = function(){
     window.localStorage.setItem("done-tasks", "");
@@ -34,20 +28,28 @@ clearBtn.onclick = function(){
 }
 
 function listDueTask(){
-    let taskArray = window.localStorage.getItem("due-tasks").split(":-:")
-    taskArray.forEach(function(task){
-        if (task !== ""){
-            addDueTask(task);
-        }
-    })
+    if (window.localStorage.getItem("due-tasks") === null){
+        window.localStorage.setItem("due-tasks", "");
+    }else {
+        let taskArray = window.localStorage.getItem("due-tasks").split(":-:")
+        taskArray.forEach(function(task){
+            if (task !== ""){
+                addDueTask(task);
+            }
+        })
+    }
 };
 function listDoneTask(){
-    let taskArray = window.localStorage.getItem("done-tasks").split(":-:")
-    taskArray.forEach(function(task){
-        if (task !== ""){
-            addDoneTask(task);
-        }
-    })
+    if (window.localStorage.getItem("done-tasks") === null){
+        window.localStorage.getItem("done-tasks", "");
+    }else{
+        let taskArray = window.localStorage.getItem("done-tasks").split(":-:")
+        taskArray.forEach(function(task){
+            if (task !== ""){
+                addDoneTask(task);
+            }
+        })
+    }   
 };
 
 listDueTask();
@@ -112,10 +114,10 @@ function addDueTask(text){
     myCheckbox.onchange = function(){
         setTimeout(function(){
             let parent = rmvBtn.parentNode;
-        parent.remove();
-        removeDueTaskLocal(text);
-        addDoneTask(text);
-        addDoneTaskLocal(text);
+            parent.remove();
+            removeDueTaskLocal(text);
+            addDoneTask(text);
+            addDoneTaskLocal(text);
         }, 200 )
         
     }
