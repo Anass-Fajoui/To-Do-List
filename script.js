@@ -15,7 +15,7 @@ setInterval(function(){
     }
     if (window.localStorage.getItem("done-tasks") === "" || window.localStorage.getItem("done-tasks") === null){
         clearBtn.style.display = "none";
-    }else{
+    }else{ 
         clearBtn.style.display = "block";
 
     }
@@ -24,7 +24,6 @@ setInterval(function(){
 clearBtn.onclick = function(){
     window.localStorage.setItem("done-tasks", "");
     doneTasks.innerHTML = "";
-    // clearBtn.style.display = "none";
 }
 
 function listDueTask(){
