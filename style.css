@@ -112,7 +112,8 @@ input[type="checkbox"]{
 .clear{
     background-color:#464545;
     color: white;
-    /* font-weight: bold; */
+    font-weight: bold;
+    letter-spacing: 0.8px;
     border-radius: 5px;
     padding: 7px 10px;
     border: none;
