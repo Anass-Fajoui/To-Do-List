@@ -1,6 +1,6 @@
 *{
     padding: 0;
-    margin: 0;
+    margin: 0; 
     font-family: "Poppins";
 }
 body{
@@ -57,27 +57,44 @@ form input[type="submit"]{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 15px 10px;
     border-radius: 10px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
-.task button{
-    background-color: red;
-    border: none;
-    font-weight: bold;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-    border-radius: 10px;
-    padding: 10px;
-    color: white;
-    cursor: pointer;
-    outline: none;
+.btns{
+    display: flex;
 }
-.task .textTask{
+.btns div{
+    color: white;
+    padding: 4px 9px;
+    margin-inline: 3px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 17px;
+}
+.removeTask{
+    background-color: red;
+}
+.editTask{
+    background-color: blue;
+}
+.confirmTask{
+    display: none;
+    background-color: green;
+}
+.textTask{
     padding: 10px;
     margin-left: 20px;
+    border-radius: 5px;
     text-overflow: wrap;
+    width: 77%;
+
+}
+.textTask[contenteditable = true]{
+    background-color: #F5F5F5;
+    /* padding: 5px 10px; */
+    margin-left: 30px;
 }
 
 input[type="checkbox"]{

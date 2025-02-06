@@ -9,7 +9,7 @@ input.focus();
 
 setInterval(function(){
     if (window.localStorage.getItem("due-tasks") === JSON.stringify([]) || window.localStorage.getItem("due-tasks") === null){
-        empty.style.display = "block";
+        empty.style.display = "block"; 
     }else{
         empty.style.display = "none";
     }
@@ -17,7 +17,6 @@ setInterval(function(){
         clearBtn.style.display = "none";
     }else{ 
         clearBtn.style.display = "block";
-
     }
 }, 1)
 
@@ -99,32 +98,56 @@ function addDueTask(text){
     taskText.appendChild(textnode);
     taskText.className = "textTask";
 
+    let Btns = document.createElement("div");
+    Btns.className = "btns";
     
-    let rmvBtn = document.createElement("button");
-    let rmvText = document.createTextNode("Remove");
-    rmvBtn.appendChild(rmvText);
+    let editBtn = document.createElement("div");
+    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
+    editBtn.className = "editTask";
+
+    let confirmBtn = document.createElement("div");
+    confirmBtn.innerHTML = '<i class="fa-solid fa-check">';
+    confirmBtn.className = "confirmTask";
+
+    let rmvBtn = document.createElement("div");
+    rmvBtn.innerHTML = '<i class="fa-solid fa-trash"></i>'
+    rmvBtn.className = "removeTask";
+
+    Btns.appendChild(editBtn);
+    Btns.appendChild(confirmBtn);
+    Btns.appendChild(rmvBtn);
+    
 
 
     rmvBtn.onclick = function(){
-        let parent = rmvBtn.parentNode;
-        parent.remove();
+        newTask.remove();
         removeDueTaskLocal(text);
     }
     myCheckbox.onchange = function(){
         setTimeout(function(){
-            let parent = rmvBtn.parentNode;
-            parent.remove();
+            newTask.remove();
             removeDueTaskLocal(text);
             addDoneTask(text);
             addDoneTaskLocal(text);
         }, 200 )
-        
+    }
+    editBtn.onclick = function(){
+        taskText.contentEditable = true;
+        editBtn.style.display = "none";
+        confirmBtn.style.display = "block";
+    }
+    confirmBtn.onclick = function(){
+        taskText.contentEditable = false;
+        let editedText = taskText.textContent;
+        removeDueTaskLocal(text);
+        addDueTaskLocal(editedText);
+        editBtn.style.display = "block";
+        confirmBtn.style.display = "none";
     }
 
-    rmvBtn.className = "removeTask";
     newTask.appendChild(myCheckbox);
     newTask.appendChild(taskText);
-    newTask.appendChild(rmvBtn);
+    newTask.appendChild(Btns);
     
     dueTasks.appendChild(newTask);
 
