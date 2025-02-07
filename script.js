@@ -6,9 +6,23 @@ let empty = document.querySelector(".empty");
 let clearBtn = document.querySelector(".clear");
 
 input.focus();
+let counter;
+if (window.localStorage.getItem("counter") === null){
+    counter = "1";
+    window.localStorage.setItem("counter", "1");
+}else{
+    counter = window.localStorage.getItem("counter");
+}
+
+function incrementCounter(){
+    let a = parseInt(counter);
+    a++;
+    counter = `${a}`;
+    window.localStorage.setItem("counter", counter);
+}
 
 setInterval(function(){
-    if (window.localStorage.getItem("due-tasks") === JSON.stringify([]) || window.localStorage.getItem("due-tasks") === null){
+    if (window.localStorage.getItem("due-tasks") === JSON.stringify({}) || window.localStorage.getItem("due-tasks") === null){
         empty.style.display = "block"; 
     }else{
         empty.style.display = "none";
@@ -27,14 +41,12 @@ clearBtn.onclick = function(){
 
 function listDueTask(){
     if (window.localStorage.getItem("due-tasks") === null){
-        window.localStorage.setItem("due-tasks", JSON.stringify([]));
+        window.localStorage.setItem("due-tasks", JSON.stringify({}));
     }else {
-        let taskArray = JSON.parse(window.localStorage.getItem("due-tasks"));
-        taskArray.forEach(function(task){
-            if (task !== ""){
-                addDueTask(task);
-            }
-        })
+        let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
+        for (let [id, text] of Object.entries(taskObj)){
+            addDueTask(id, text);
+        }
     }
 };
 function listDoneTask(){
@@ -54,24 +66,28 @@ listDueTask();
 listDoneTask();
 
 
-function addDueTaskLocal(text){
-    let taskArray = JSON.parse(window.localStorage.getItem("due-tasks"));
-    taskArray.push(text);
-    window.localStorage.setItem("due-tasks", JSON.stringify(taskArray));
+function addDueTaskLocal(id, text){
+    let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
+    taskObj[id] = text;
+    window.localStorage.setItem("due-tasks", JSON.stringify(taskObj));
 };
 
-function removeDueTaskLocal(text){
-    let taskArray = JSON.parse(window.localStorage.getItem("due-tasks"));
-    let index = taskArray.indexOf(text);
-    if (index !== -1) { 
-    taskArray.splice(index, 1);
-    }
-    window.localStorage.setItem("due-tasks", JSON.stringify(taskArray));
+function editDueTaskLocal(id, newText){
+    let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
+    taskObj[id] = newText;
+    window.localStorage.setItem("due-tasks", JSON.stringify(taskObj));
+}
+
+function removeDueTaskLocal(id){
+    let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
+    delete taskObj[id];
+    window.localStorage.setItem("due-tasks", JSON.stringify(taskObj));
 };
 
-function addDoneTaskLocal(text){
+function addDoneTaskLocal(id){
+    let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
     let taskArray = JSON.parse(window.localStorage.getItem("done-tasks"));
-    taskArray.push(text);
+    taskArray.push(taskObj[id]);
     window.localStorage.setItem("done-tasks", JSON.stringify(taskArray));
 };
 
@@ -86,7 +102,7 @@ function removeDoneTaskLocal(text){
 
 
 
-function addDueTask(text){
+function addDueTask(id, text){
     let newTask = document.createElement("div");
     newTask.className = "task";
 
@@ -121,14 +137,14 @@ function addDueTask(text){
 
     rmvBtn.onclick = function(){
         newTask.remove();
-        removeDueTaskLocal(text);
+        removeDueTaskLocal(id);
     }
     myCheckbox.onchange = function(){
         setTimeout(function(){
             newTask.remove();
-            removeDueTaskLocal(text);
-            addDoneTask(text);
-            addDoneTaskLocal(text);
+            addDoneTask(id);
+            addDoneTaskLocal(id);
+            removeDueTaskLocal(id);        
         }, 200 )
     }
     editBtn.onclick = function(){
@@ -138,9 +154,8 @@ function addDueTask(text){
     }
     confirmBtn.onclick = function(){
         taskText.contentEditable = false;
-        let editedText = taskText.textContent;
-        removeDueTaskLocal(text);
-        addDueTaskLocal(editedText);
+        let newText = taskText.textContent;
+        editDueTaskLocal(id, newText)
         editBtn.style.display = "block";
         confirmBtn.style.display = "none";
     }
@@ -153,12 +168,13 @@ function addDueTask(text){
 
 };
 
-function addDoneTask(text){
+function addDoneTask(id){ 
+    let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
     let newTask = document.createElement("div");
     newTask.className = "doneTask";
 
     let taskText = document.createElement("div");
-    let textnode = document.createTextNode(text);
+    let textnode = document.createTextNode(taskObj[id]);
     taskText.appendChild(textnode);
     taskText.className = "textTask";
 
@@ -169,6 +185,7 @@ function addDoneTask(text){
 };
 
 myform.onsubmit = function(event){
-    addDueTask(input.value);
-    addDueTaskLocal(input.value);
+    addDueTask(counter, input.value);
+    addDueTaskLocal(counter, input.value);
+    incrementCounter();
 };
