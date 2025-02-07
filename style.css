@@ -141,6 +141,27 @@ input[type="checkbox"]{
     cursor: pointer;
     display: none;
 }
+.warning{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+.reset{
+    text-align: center;
+    width: fit-content;
+    margin-top: 10px;
+    margin-inline: auto ;
+    background-color: #E60000;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+.reset:hover{
+    background-color: #8B0000;
+}
 
 @media (max-width: 710px){
     .form-container, .tasks-container{

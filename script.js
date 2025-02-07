@@ -4,6 +4,14 @@ let dueTasks = document.querySelector(".due-tasks");
 let doneTasks = document.querySelector(".done-tasks");
 let empty = document.querySelector(".empty");
 let clearBtn = document.querySelector(".clear");
+let reset = document.querySelector(".reset");
+
+reset.onclick = function(){
+    window.localStorage.setItem("counter", "1");
+    window.localStorage.setItem("due-tasks", JSON.stringify({}));
+    window.localStorage.setItem("done-tasks", JSON.stringify([]));
+    location.reload();
+}
 
 input.focus();
 let counter;
@@ -185,7 +193,12 @@ function addDoneTask(id){
 };
 
 myform.onsubmit = function(event){
-    addDueTask(counter, input.value);
-    addDueTaskLocal(counter, input.value);
-    incrementCounter();
+    if (input.value){
+        addDueTask(counter, input.value);
+        addDueTaskLocal(counter, input.value);
+        incrementCounter();
+    }else{
+        event.preventDefault();
+    }
+    
 };
