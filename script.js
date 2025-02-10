@@ -148,9 +148,10 @@ function addDueTask(id, text){
         removeDueTaskLocal(id);
     }
     myCheckbox.onchange = function(){
+        let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
         setTimeout(function(){
             newTask.remove();
-            addDoneTask(id);
+            addDoneTask(taskObj[id]);
             addDoneTaskLocal(id);
             removeDueTaskLocal(id);        
         }, 200 )
@@ -175,14 +176,14 @@ function addDueTask(id, text){
     dueTasks.appendChild(newTask);
 
 };
-
-function addDoneTask(id){ 
-    let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
+// Heeeey Error heeere
+function addDoneTask(text){ 
+    // let taskObj = JSON.parse(window.localStorage.getItem("due-tasks"));
     let newTask = document.createElement("div");
     newTask.className = "doneTask";
 
     let taskText = document.createElement("div");
-    let textnode = document.createTextNode(taskObj[id]);
+    let textnode = document.createTextNode(text);
     taskText.appendChild(textnode);
     taskText.className = "textTask";
 
